@@ -55,7 +55,9 @@ CREATE TABLE Appointment (
     doctor_id INTEGER,
     date_and_time DATETIME,
     reason TEXT NOT NULL,
-    duration TIME
+    duration TIME,
+    FOREIGN KEY (patient_id) REFERENCES Patient(id),
+    FOREIGN KEY (doctor_id) REFERENCES Doctor(id)
 );
 
 CREATE TABLE Prescription (
@@ -64,7 +66,9 @@ CREATE TABLE Prescription (
     doctor_id INTEGER,
     medication_name TEXT NOT NULL,
     date DATE,
-    dosage TEXT
+    dosage TEXT,
+    FOREIGN KEY (patient_id) REFERENCES Patient(id),
+    FOREIGN KEY (doctor_id) REFERENCES Doctor(id)
 );
 --INNER JOIN (LISTING PATIENT AND DOCTOR NAMES FOR ALL APPOINTMENTS)
 SELECT Patient.first_name AS patient_first_name,
