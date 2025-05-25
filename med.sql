@@ -66,3 +66,43 @@ CREATE TABLE Prescription (
     date DATE,
     dosage TEXT
 );
+--INNER JOIN (LISTING PATIENT AND DOCTOR NAMES FOR ALL APPOINTMENTS)
+SELECT Patient.first_name AS patient_first_name,
+       Patient.last_name AS patient_last_name,
+       Doctor.first_name AS doctor_first_name,
+       Doctor.last_name AS doctor_last_name,
+       Appointment.date_and_time
+FROM Appointment
+INNER JOIN Patient ON Appointment.patient_id = Patient.id
+INNER JOIN Doctor ON Appointment.doctor_id = Doctor.id; 
+
+--INNER JOIN (FINDING ALL PRESCRIPTIONS WITH ASSOCIATED PATIENT AND DOCTOR NAMES)
+SELECT 
+    Patient.first_name AS patient_first_name,
+    Patient.last_name AS patient_last_name,
+    Doctor.first_name AS doctor_first_name,
+    Doctor.last_name AS doctor_last_name,
+    Prescription.medication_name,
+    Prescription.date,
+    Prescription.dosage
+FROM Prescription
+INNER JOIN Patient ON Prescription.patient_id = Patient.id
+INNER JOIN Doctor ON Prescription.doctor_id = Doctor.id;
+
+--LEFT JOIN (LISTING ALL PATIENTS AND THEIR APPOINTMENTS,INCLUDING THOSE WITHOUT)
+SELECT 
+    Patient.first_name,
+    Patient.last_name,
+    Appointment.date_and_time,
+    Appointment.reason
+FROM Patient
+LEFT JOIN Appointment ON Patient.id = Appointment.patient_id;
+
+--LEFT JOIN (LISTING ALL DOCTORS PLUS THEIR WRITTEN PRESCRIPTIONS,INCLUDING THOSE WITHOUT)
+SELECT 
+    Doctor.first_name,
+    Doctor.last_name,
+    Prescription.medication_name,
+    Prescription.date
+FROM Doctor
+LEFT JOIN Prescription ON Doctor.id = Prescription.doctor_id;
